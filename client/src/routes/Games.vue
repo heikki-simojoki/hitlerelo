@@ -32,7 +32,8 @@ export default {
 
   mounted() {
     axios.get(baseUrl + "api/games").then((response) => {
-      this.games = response.data.sort((a, b) => b.time - a.time);
+      this.games = response.data;
+      this.games.sort((a, b) => b.time - a.time);
     });
   },
 };

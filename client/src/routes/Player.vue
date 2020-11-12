@@ -17,8 +17,8 @@
 
         <b-row>
           <b-col>
-            <div>Pelit Hitlerinä:</div>
-            <div>{{player.hitlerGames}}</div>
+            <div>Ammuttu:</div>
+            <div>{{player.timesShot}}</div>
           </b-col>
           <b-col>
             <div>Voittoprosentti:</div>
@@ -50,8 +50,8 @@
 
         <b-row>
           <b-col>
-            <div>Ammuttu:</div>
-            <div>{{player.timesShot}}</div>
+            <div>Pelit Hitlerinä:</div>
+            <div>{{player.hitlerGames}}</div>
           </b-col>
           <b-col>
             <div>Voittoprosentti Hitlerinä:</div>
@@ -103,7 +103,7 @@ export default {
             g.liberals.some((p) => p.id == this.player.id) ||
             g.facists.some((p) => p.id == this.player.id)
         );
-        this.games.sort((a, b) => a - b);
+        this.games.sort((a, b) => b.time - a.time);
       });
     },
   },

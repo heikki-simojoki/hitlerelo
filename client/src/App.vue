@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <nav class="navbar fixed-bottom navbar-light">
+    <nav class="navbar fixed-bottom navbar-light" id="navbar">
 
       <b-nav-item
         class="navbar-brand"

@@ -128,6 +128,7 @@
             text="Lisää pelaaja"
             class="add-player-button"
             :disabled="players.length == 0"
+            
           >
             <b-dropdown-item
               v-for="player in players"
@@ -163,7 +164,7 @@ export default {
       hitler: "",
       shot: {},
       players: [],
-      winner: "L",
+      winner: "",
     };
   },
   methods: {
@@ -269,4 +270,10 @@ export default {
 .teamname {
   padding-left: 10px;
 }
+
+.add-player-button /deep/ .dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
 </style>
