@@ -45,6 +45,12 @@ app.post('/api/games', (req, res) => {
     res.sendStatus(200)
 })
 
+app.delete('/api/games', (req, res) => {
+    elo.removeLastGame()
+    res.sendStatus(200)
+})
+
+
 app.get('/api/games/:time', (req, res) => {
     res.send(JSON.stringify(elo.getGames().find(p => p.time == req.params.time)))
 })

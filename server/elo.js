@@ -214,10 +214,20 @@ function addGame(facists, liberals, hitler, facistsWon, shotPlayers) {
     writeToFile()
 }
 
+function removeLastGame(){
+    if(games.length == 0) return
 
+    let lastGame = games.pop()
+
+    lastGame.facists.concat(lastGame.liberals).forEach(player => {
+        players.find(p => p.id == player.id).elo -= player.eloChange
+    })
+
+    writeToFile()
+}
 
 function getGames() {
     return games
 }
 
-module.exports = { addPlayer, getPlayers, getPlayersData, addGame, getGames, getPlayerData, loadDataSync }
+module.exports = { addPlayer, getPlayers, getPlayersData, addGame, getGames, getPlayerData, loadDataSync, removeLastGame }
