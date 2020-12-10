@@ -23,12 +23,13 @@ app.get('/api/players', (req, res) => {
 })
 
 app.get('/api/players/:id', (req, res) => {
-    res.send(JSON.stringify(elo.getPlayersData().find(p => p.id == req.params.id)))
+    res.send(JSON.stringify(elo.getPlayerData(req.params.id)))
 })
 
 app.post('/api/players', (req, res) => {
-    if(elo.addPlayer(req.body.name)){
-    res.set('Location', '/api/players/' + elo.getPlayerByName(req.body.name).id).sendStatus(201)
+    let player = elo.addPlayer(req.body.name)
+    if(player != null){
+    res.set('Location', '/api/players/' + player.id).sendStatus(201)
     }
     else{
         res.sendStatus(409)

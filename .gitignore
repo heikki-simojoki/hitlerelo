@@ -25,5 +25,7 @@ pnpm-debug.log*
 # Deploy scripts
 deploy.sh
 
-
+#Misc data
+package-lock.json
+data.json
 serverconfig.json

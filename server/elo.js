@@ -26,7 +26,7 @@ function genID() {
 }
 
 function addPlayer(name) {
-    if (players.some(p => p.name == name)) return false
+    if (players.some(p => p.name == name)) return null
 
     let player = {
         name,
@@ -36,7 +36,7 @@ function addPlayer(name) {
 
     players.push(player)
     writeToFile()
-    return true
+    return player
 }
 
 function getPlayers() {
@@ -45,80 +45,78 @@ function getPlayers() {
 
 
 function getPlayersData() {
-    return players.map(player => {
-        var liberalGames = 0
-        var facistGames = 0
-        var totalGames = 0
-
-        var liberalWins = 0
-        var facistWins = 0
-        var totalWins = 0
-
-        var hitlerGames = 0
-        var hitlerWins = 0
-
-        var shotAsFacist = 0
-        var shotAsHitler = 0
-        var shotAsLiberal = 0
-        var timesShot = 0
-
-        for (var i = 0; i < games.length; i++) {
-            let game = games[i]
-
-            let isLiberal = game.liberals.some(p => p.id == player.id)
-            let isFacist = game.facists.some(p => p.id == player.id)
-            let isHitler = game.hitler.id == player.id
-            let wasShot = game.shot.some(p => p.id == player.id)
-            let won = (game.facistsWon && isFacist) || (!game.facistsWon && isLiberal)
-
-            if(!isLiberal && !isFacist) continue;
-
-
-            if (isLiberal) liberalGames++
-            if (isFacist) facistGames++
-            if (isHitler) hitlerGames++
-
-            totalGames++
-
-            if (won && isFacist) facistWins++
-            if (won && isHitler) hitlerWins++
-            if (won && isLiberal) liberalWins++
-
-            if (won) totalWins++
-
-            if (wasShot && isFacist) shotAsFacist++
-            if (wasShot && isLiberal) shotAsLiberal++
-            if (wasShot && shotAsHitler) shotAsHitler++
-            if (wasShot) timesShot++
-        }
-
-        return {
-            ...player,
-            liberalGames,
-            facistGames,
-            totalGames,
-
-            liberalWins,
-            facistWins,
-            totalWins,
-
-            hitlerGames,
-            hitlerWins,
-
-            shotAsLiberal,
-            shotAsFacist,
-            shotAsHitler,
-            timesShot
-        }
-    })
+    return players.map(player => getPlayerData(player.id))
 }
 
-function getPlayerByName(name) {
-    return players.find(p => p.name == name)
-}
+function getPlayerData(id) {
+    let player = getPlayers().find(p => p.id == id)
+    if (player == null) return null
 
-function getPlayerByID(id) {
-    return getPlayers().find(p => p.id == id)
+    var liberalGames = 0
+    var facistGames = 0
+    var totalGames = 0
+
+    var liberalWins = 0
+    var facistWins = 0
+    var totalWins = 0
+
+    var hitlerGames = 0
+    var hitlerWins = 0
+
+    var shotAsFacist = 0
+    var shotAsHitler = 0
+    var shotAsLiberal = 0
+    var timesShot = 0
+
+    for (var i = 0; i < games.length; i++) {
+        let game = games[i]
+
+        let isLiberal = game.liberals.some(p => p.id == player.id)
+        let isFacist = game.facists.some(p => p.id == player.id)
+        let isHitler = game.hitler.id == player.id
+        let wasShot = game.shot.some(p => p.id == player.id)
+        let won = (game.facistsWon && isFacist) || (!game.facistsWon && isLiberal)
+
+        if (!isLiberal && !isFacist) continue;
+
+
+        if (isLiberal) liberalGames++
+        if (isFacist) facistGames++
+        if (isHitler) hitlerGames++
+
+        totalGames++
+
+        if (won && isFacist) facistWins++
+        if (won && isHitler) hitlerWins++
+        if (won && isLiberal) liberalWins++
+
+        if (won) totalWins++
+
+        if (wasShot && isFacist) shotAsFacist++
+        if (wasShot && isLiberal) shotAsLiberal++
+        if (wasShot && shotAsHitler) shotAsHitler++
+        if (wasShot) timesShot++
+    }
+
+    return {
+        ...player,
+        liberalGames,
+        facistGames,
+        totalGames,
+
+        liberalWins,
+        facistWins,
+        totalWins,
+
+        hitlerGames,
+        hitlerWins,
+
+        shotAsLiberal,
+        shotAsFacist,
+        shotAsHitler,
+        timesShot
+    }
+
 }
 
 
@@ -222,4 +220,4 @@ function getGames() {
     return games
 }
 
-module.exports = { addPlayer, getPlayers, getPlayersData, addGame, getGames, getPlayerByName, getPlayerByID, loadDataSync }
+module.exports = { addPlayer, getPlayers, getPlayersData, addGame, getGames, getPlayerData, loadDataSync }

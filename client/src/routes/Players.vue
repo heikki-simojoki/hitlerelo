@@ -8,7 +8,10 @@
         :key="player.id"
         :to="'/players/' + player.id"
       >
-        <h3>{{index + 1}}. {{player.name}}</h3>
+      <div class="d-flex mr-auto align-items-center">
+        <h3>{{index + 1}}. </h3>
+        <h3>{{player.name}}</h3>
+      </div>
         <h4> {{Math.round(player.elo)}} </h4>
 
       </b-list-group-item>

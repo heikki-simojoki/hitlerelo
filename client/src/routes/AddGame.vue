@@ -274,6 +274,7 @@ export default {
 .add-player-button /deep/ .dropdown-menu {
     max-height: 300px;
     overflow-y: auto;
+    z-index: 9999;
   }
 
 </style>
