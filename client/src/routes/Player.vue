@@ -61,6 +61,11 @@
 
       </b-container>
 
+      <b-container v-if="games.length != 0" style="padding-right: 20px">
+      <Chart :games='games' :playerID='player.id'>
+      </Chart>
+      </b-container>
+
     </div>
 
     <Game
@@ -75,6 +80,7 @@
 
 <script>
 import Game from "../components/Game.vue";
+import Chart from "../components/Chart.vue"
 
 import axios from "axios";
 const baseUrl = process.env.VUE_APP_API_URL;
@@ -85,10 +91,12 @@ export default {
     return {
       player: {},
       games: [],
+     
     };
   },
   components: {
     Game,
+    Chart
   },
 
   methods: {
