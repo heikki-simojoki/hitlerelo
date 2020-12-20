@@ -1,21 +1,11 @@
-
 <script>
 import { Line } from 'vue-chartjs'
 
 export default {
   extends: Line,
-  props: {
-    games: {
-      type: Array,
-    },
-    playerID: {
-      type: String,
-    }
-  },
-
-
-  mounted () {
-    let defaultOptions = {
+  data() {
+    return {
+      defaultOptions: {
         maintainAspectRatio: false,
         legend: {
           display: false
@@ -45,40 +35,65 @@ export default {
           }
         }
     }
-
-
-    let filteredGames = this.games.filter(g => g.liberals.some(p => p.id == this.playerID) || g.facists.some(p => p.id == this.playerID))
-
-    filteredGames.sort((a, b) =>  a.time - b.time);
-
-    let labels = filteredGames.map(g => this.getDateString(g.time))
-    labels.unshift("Created")
-
-    let playerHistory = filteredGames.map(g => g.facists.concat(g.liberals).find(p => p.id == this.playerID))
-
-    let eloData = playerHistory.map(p => p.elo)
-    console.log(eloData)
-    let lastPlayerHistory = playerHistory[playerHistory.length - 1]
-    eloData.push(lastPlayerHistory.elo + lastPlayerHistory.eloChange)
-
-
-    let chartData = {
-      labels: labels,
-      datasets: [{
-        label: "ELO",
-        data: eloData,
-        fill: false,
-        lineTension: 0.1,
-        borderColor: '#434343',
-        backgroundColor: '#434343FF',
-        pointRadius: 5
-      }]
     }
+  },
+  props: {
+    games: {
+      type: Array,
+    },
+    playerID: {
+      type: String,
+    }
+  },
 
-    this.renderChart(chartData, {...defaultOptions, ...this.options})
+  watch: {
+    playerID(){
+      this.renderChart(this.computeData(), {...this.defaultOptions, ...this.options})
+    },
+    games(){
+      this.renderChart(this.computeData(), {...this.defaultOptions, ...this.options})
+    }
+  },
+
+
+  mounted () {
+    this.renderChart(this.computeData(), {...this.defaultOptions, ...this.options})
   },
 
   methods: {
+
+    computeData(){
+      let filteredGames = this.games.filter(g => g.liberals.some(p => p.id == this.playerID) || g.facists.some(p => p.id == this.playerID))
+
+      filteredGames.sort((a, b) =>  a.time - b.time);
+
+      let labels = filteredGames.map(g => this.getDateString(g.time))
+      labels.unshift("Luotu")
+
+      let playerHistory = filteredGames.map(g => g.facists.concat(g.liberals).find(p => p.id == this.playerID))
+
+      let eloData = playerHistory.map(p => p.elo)
+
+      let lastPlayerHistory = playerHistory[playerHistory.length - 1]
+      eloData.push(lastPlayerHistory.elo + lastPlayerHistory.eloChange)
+
+
+      return {
+        labels: labels,
+        datasets: [{
+          label: "ELO",
+          data: eloData,
+          fill: false,
+          lineTension: 0.1,
+          borderColor: '#434343',
+          backgroundColor: '#434343FF',
+          pointRadius: 5
+        }]
+      }
+    },
+
+
+
      getDateString(time) {
       let date = new Date(time);
 

@@ -62,7 +62,7 @@
       </b-container>
 
       <b-container v-if="games.length != 0" style="padding-right: 20px">
-      <Chart :games='games' :playerID='player.id'>
+      <Chart :games='games' :playerID='player.id' id="eloChart">
       </Chart>
       </b-container>
 
@@ -112,6 +112,7 @@ export default {
             g.facists.some((p) => p.id == this.player.id)
         );
         this.games.sort((a, b) => b.time - a.time);
+        
       });
     },
   },
