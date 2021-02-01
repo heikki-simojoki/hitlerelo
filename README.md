@@ -37,14 +37,16 @@ There is currenty no JSON validation on the server side.
   shotAsLiberal: Number,
   shotAsFacist: Number,
   shotAsHitler: Number,
-  timesShot: Number
+  timesShot: Number,
+  maxElo: Number,
+  minElo: Number
 }
 ```
 
 #### Game:
 ```
 {
-  time: Unix timestamp,
+  time: Number (milliseconds since Jan 1 1970),
   facistsWon: Boolean,
   facists: Array,
   liberals: Array,
