@@ -68,6 +68,9 @@ function getPlayerData(id) {
     var shotAsLiberal = 0
     var timesShot = 0
 
+    var maxElo = player.elo
+    var minElo = player.elo
+
     for (var i = 0; i < games.length; i++) {
         let game = games[i]
 
@@ -78,7 +81,8 @@ function getPlayerData(id) {
         let won = (game.facistsWon && isFacist) || (!game.facistsWon && isLiberal)
 
         if (!isLiberal && !isFacist) continue;
-
+        
+        
 
         if (isLiberal) liberalGames++
         if (isFacist) facistGames++
@@ -96,6 +100,13 @@ function getPlayerData(id) {
         if (wasShot && isLiberal) shotAsLiberal++
         if (wasShot && shotAsHitler) shotAsHitler++
         if (wasShot) timesShot++
+
+
+        let oldElo = (isLiberal ? game.liberals : game.facists).find(p => p.id == player.id).elo
+
+        if(oldElo < minElo) minElo = oldElo
+        if(oldElo > maxElo) maxElo = oldElo
+
     }
 
     return {
@@ -114,7 +125,10 @@ function getPlayerData(id) {
         shotAsLiberal,
         shotAsFacist,
         shotAsHitler,
-        timesShot
+        timesShot,
+
+        maxElo,
+        minElo
     }
 
 }

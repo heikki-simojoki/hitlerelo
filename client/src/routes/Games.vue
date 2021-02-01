@@ -6,7 +6,7 @@
       :key="game.time"
       :game="game"
       class="game"
-      :first="index == 0"
+      :isRemovable="index == 0 && shouldBeRemovable(game)"
       @remove-game="removeGame"
     />
 
@@ -67,7 +67,14 @@ export default {
             }
           })
           
+    },
+
+    shouldBeRemovable(game) {
+      const currentTime = new Date().getTime()
+      return currentTime - game.time < (60 * 15 * 1000)
     }
+
+
   }
 };
 </script>

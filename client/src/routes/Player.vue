@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="playercard shadow">
+    <div class="playercard shadow" v-if="player != null">
       <h1> {{player.name}}</h1>
       <hr />
       <b-container>
@@ -59,6 +59,17 @@
           </b-col>
         </b-row>
 
+        <b-row>
+          <b-col>
+            <div>Korkein Elo:</div>
+            <div>{{Math.round(player.maxElo)}}</div>
+          </b-col>
+          <b-col>
+            <div>Matalin Elo:</div>
+            <div>{{Math.round(player.minElo)}}</div>
+          </b-col>
+        </b-row>
+
       </b-container>
 
       <b-container v-if="games.length != 0" style="padding-right: 20px">
@@ -89,7 +100,7 @@ export default {
   name: "Player",
   data() {
     return {
-      player: {},
+      player: null,
       games: [],
      
     };

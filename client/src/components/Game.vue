@@ -2,7 +2,7 @@
   <div class="gamecard shadow" style="position: relative">
     <h3 class="mr-auto">{{ getDateString(game.time) }}</h3>
     <b-icon
-              v-if="first"
+              v-if="isRemovable"
               icon="x"
               style="width: 35px; height: 35px; margin-left: 5px; cursor: pointer; position: absolute; top:0; right: 0"
               @click="$emit('remove-game')"
@@ -85,7 +85,7 @@ export default {
   name: "Game",
   props: {
     game: Object,
-    first: Boolean,
+    isRemovable: Boolean,
   },
   methods: {
     getEloChangeVariant(change) {
