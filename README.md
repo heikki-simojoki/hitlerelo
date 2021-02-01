@@ -1,5 +1,5 @@
 # hitlerelo
-Server and client for tracking Secret Hitler games using Elo rating.
+Server and client for tracking [Secret Hitler](https://www.secrethitler.com/) games using Elo rating.
 
 Working instance is hosted on https://tefy.net
 
